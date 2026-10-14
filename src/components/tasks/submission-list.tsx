@@ -26,7 +26,7 @@ export function SubmissionList({ submissions, tasks }: SubmissionListProps) {
                         href={`/tasks/${s.task_id}`}
                         className="truncate text-lg font-bold underline-offset-4 hover:underline"
                       >
-                        {task?.title ?? "Task no longer available"}
+                        {task?.title ?? "Challenge no longer available"}
                       </Link>
                     )}
                     <p className="font-mono text-xs text-subtle">
@@ -63,12 +63,18 @@ export function SubmissionList({ submissions, tasks }: SubmissionListProps) {
                 </div>
 
                 {s.review_note && (
-                  <p className="border-l-[3px] border-ink bg-muted px-3 py-2 text-sm">
-                    <span className="font-bold">Reviewer note: </span>
+                  <p
+                    className={
+                      s.status === "rejected"
+                        ? "border-[3px] border-danger bg-danger/10 px-3 py-2 text-sm"
+                        : "border-l-[3px] border-ink bg-muted px-3 py-2 text-sm"
+                    }
+                  >
+                    <span className="font-bold">{s.status === "rejected" ? "Why it was rejected: " : "Reviewer note: "}</span>
                     {s.review_note}
                   </p>
                 )}
-                {s.status === "approved" && <p className="text-sm font-bold">Reward credited to your coins.</p>}
+                {s.status === "approved" && <p className="text-sm font-bold">Reward credited to My Coins.</p>}
               </CardBody>
             </Card>
           </li>

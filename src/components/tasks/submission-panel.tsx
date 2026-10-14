@@ -29,10 +29,10 @@ export function SubmissionPanel({ taskId, evidenceRequired, blockedReason }: Sub
   // new pending submission and (correctly) no form.
   if (state.status === "submitted") {
     return (
-      <Alert tone="success" title="Submission received" role="status">
-        Your submission is now pending review. Track it on{" "}
+      <Alert tone="success" title="Attempt received" role="status">
+        Your attempt is now waiting for review. Track it on{" "}
         <Link href="/submissions" className="font-bold underline">
-          My submissions
+          My Attempts
         </Link>
         .
       </Alert>
@@ -55,8 +55,8 @@ export function SubmissionPanel({ taskId, evidenceRequired, blockedReason }: Sub
       }}
     >
       <Card>
-        <CardHeader>
-          <CardTitle>Submit your proof</CardTitle>
+        <CardHeader className="bg-mint text-on-accent">
+          <CardTitle className="font-display text-3xl uppercase">Submit your attempt</CardTitle>
         </CardHeader>
         <CardBody className="flex flex-col gap-5">
           {state.status === "error" && state.message && (
@@ -117,7 +117,7 @@ export function SubmissionPanel({ taskId, evidenceRequired, blockedReason }: Sub
         </CardBody>
         <CardFooter>
           <Button type="submit" disabled={pending}>
-            {pending ? "Submitting…" : "Submit for review"}
+            {pending ? "Submitting…" : "Submit attempt"}
           </Button>
           {pending && <span className="text-sm text-subtle">Uploading and saving…</span>}
         </CardFooter>

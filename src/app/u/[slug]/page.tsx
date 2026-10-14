@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PageLoading } from "@/components/auth/gates";
 import { Container } from "@/components/layout/container";
+import { InitialsAvatar } from "@/components/profile/initials-avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardBody } from "@/components/ui/card";
 import { Text } from "@/components/ui/typography";
 import { getPublicProfile } from "@/lib/profile/data";
 import { readSocialLinks } from "@/lib/profile/social-links";
@@ -38,51 +38,49 @@ async function PublicProfileContent({ params }: { params: PageProps<"/u/[slug]">
 
   const name = profile.display_name ?? profile.username;
   const links = readSocialLinks(profile.social_links);
-  const initials = name.replace(/[^\p{L}\p{N}]/gu, "").slice(0, 2).toUpperCase() || "?";
 
   const stats = [
-    { label: "Coins earned", value: Number(profile.lifetime_coins).toLocaleString("en") },
-    { label: "Rank", value: profile.leaderboard_rank ? `#${profile.leaderboard_rank}` : "—" },
-    { label: "Tasks done", value: profile.approved_tasks.toLocaleString("en") },
+    { label: "Coins earned", value: Number(profile.lifetime_coins).toLocaleString("en"), tone: "bg-mint text-on-accent" },
+    { label: "Rank", value: profile.leaderboard_rank ? `#${profile.leaderboard_rank}` : "—", tone: "bg-surface" },
+    { label: "Challenges", value: profile.approved_tasks.toLocaleString("en"), tone: "bg-surface" },
   ];
 
   return (
     <>
-      <header className="border-b-[3px] border-ink bg-mint text-on-accent">
-        <Container className="flex flex-col items-start gap-6 py-12 sm:flex-row sm:items-center">
-          <div
-            aria-hidden="true"
-            className="flex size-24 shrink-0 items-center justify-center rounded-full border-[3px] border-on-accent bg-sun font-mono text-on-accent text-3xl font-bold shadow-brutal"
-          >
-            {initials}
-          </div>
-          <div className="flex min-w-0 flex-col gap-2">
-            <h1 className="break-words text-4xl font-bold leading-tight tracking-tight sm:text-5xl">{name}</h1>
-            <p className="font-mono text-lg">@{profile.username}</p>
-            <p className="text-sm">Member since {dateFormat.format(new Date(profile.member_since))}</p>
+      <header className="relative overflow-hidden border-b-[3px] border-ink">
+        <div aria-hidden="true" className="bg-lines absolute inset-0" />
+        <div aria-hidden="true" className="absolute inset-y-0 left-0 w-2 bg-mint" />
+        <Container className="relative flex flex-col items-start gap-8 py-12 sm:flex-row sm:items-center sm:py-16">
+          <InitialsAvatar name={name} className="size-28 text-5xl sm:size-36 sm:text-6xl" />
+          <div className="flex min-w-0 flex-col gap-3">
+            <p className="w-fit -rotate-1 border-[3px] border-ink bg-surface px-2 py-0.5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-mint">
+              Code Sapiens participant
+            </p>
+            <h1 className="break-words font-display text-5xl uppercase leading-[0.92] sm:text-7xl">{name}</h1>
+            <p className="font-mono text-lg text-subtle">
+              @{profile.username} · since {dateFormat.format(new Date(profile.member_since))}
+            </p>
           </div>
         </Container>
       </header>
 
-      <Container className="grid gap-8 py-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-        <div className="flex flex-col gap-8">
+      <Container className="grid gap-10 py-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+        <div className="flex flex-col gap-10">
           <dl className="grid grid-cols-3 gap-4">
             {stats.map((s) => (
-              <Card key={s.label}>
-                <CardBody className="flex flex-col gap-1 p-4">
-                  <dt className="font-mono text-xs font-bold uppercase tracking-wider text-subtle">{s.label}</dt>
-                  <dd className="text-2xl font-bold sm:text-3xl">{s.value}</dd>
-                </CardBody>
-              </Card>
+              <div key={s.label} className={`flex flex-col gap-1 border-[3px] border-ink p-4 shadow-brutal ${s.tone}`}>
+                <dt className="font-mono text-xs font-bold uppercase tracking-wider">{s.label}</dt>
+                <dd className="font-display text-4xl leading-none sm:text-5xl">{s.value}</dd>
+              </div>
             ))}
           </dl>
 
           <section aria-labelledby="about" className="flex flex-col gap-3">
-            <h2 id="about" className="text-xl font-bold uppercase tracking-wide">
+            <h2 id="about" className="font-display text-3xl uppercase">
               About
             </h2>
             {profile.bio ? (
-              <Text className="whitespace-pre-line break-words">{profile.bio}</Text>
+              <Text className="whitespace-pre-line break-words text-lg">{profile.bio}</Text>
             ) : (
               <Text className="text-subtle">No bio yet.</Text>
             )}
@@ -91,7 +89,7 @@ async function PublicProfileContent({ params }: { params: PageProps<"/u/[slug]">
 
         {links.length > 0 && (
           <section aria-labelledby="links" className="flex flex-col gap-3">
-            <h2 id="links" className="text-xl font-bold uppercase tracking-wide">
+            <h2 id="links" className="font-display text-3xl uppercase">
               Links
             </h2>
             <ul className="flex list-none flex-col gap-3">
@@ -105,9 +103,7 @@ async function PublicProfileContent({ params }: { params: PageProps<"/u/[slug]">
                   >
                     <span className="flex min-w-0 items-center gap-3">
                       <Badge tone="sky">{link.label}</Badge>
-                      <span className="truncate font-mono text-sm font-normal">
-                        {link.url.replace(/^https:\/\//, "")}
-                      </span>
+                      <span className="truncate font-mono text-sm font-normal">{link.url.replace(/^https:\/\//, "")}</span>
                     </span>
                     <span aria-hidden="true">↗</span>
                   </a>
