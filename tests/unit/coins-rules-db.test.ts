@@ -1,6 +1,6 @@
 // Ledger rules R2/R3/R5 on the real migrations (PGlite).
 //
-// Spending is NOT a TaskMint feature. To prove the rule "spending must never
+// Spending is NOT a feature of The Challenge Arena. To prove the rule "spending must never
 // reduce lifetime earnings" holds for any future spending kind, this test adds
 // a TEST-ONLY kind to a throwaway in-memory database and checks that a spend
 // lowers the balance but not lifetime earnings or leaderboard standing.
@@ -53,8 +53,8 @@ beforeAll(async () => {
   }
 
   await db.query("insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, $3), ($4, $5, $6)", [
-    admin, `${admin}@taskmint.test`, { username: `adm_${admin.slice(0, 8)}` },
-    user, `${user}@taskmint.test`, { username },
+    admin, `${admin}@codesapiens.test`, { username: `adm_${admin.slice(0, 8)}` },
+    user, `${user}@codesapiens.test`, { username },
   ]);
   await db.query("update public.profiles set role = 'admin' where id = $1", [admin]);
   const { rows: [task] } = await db.query<{ id: string }>(

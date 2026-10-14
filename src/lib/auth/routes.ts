@@ -26,7 +26,7 @@ export function safeNextPath(next: unknown): string {
   if (typeof next !== "string" || !next.startsWith("/")) return DEFAULT_LOGIN_REDIRECT;
   // Resolve exactly like a browser would (it strips tabs/newlines and treats `\` as `/`),
   // then require that the result stays on our own origin.
-  const base = "http://taskmint.invalid";
+  const base = "http://codesapiens.invalid";
   let url: URL;
   try {
     url = new URL(next, base);

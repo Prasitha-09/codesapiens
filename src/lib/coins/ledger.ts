@@ -7,7 +7,7 @@ import type { CoinTxKind } from "@/types/database";
  * Rules (mirrors migration 6):
  *   balance          = sum of all rows
  *   lifetime earned  = sum of EARNING rows (task_reward, admin_adjustment)
- * Spending isn't part of TaskMint yet; if it's added, it must use a new,
+ * Spending isn't part of The Challenge Arena yet; if it's added, it must use a new,
  * non-earning kind so it lowers the balance but never lifetime earnings.
  */
 

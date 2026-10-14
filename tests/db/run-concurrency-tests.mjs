@@ -31,7 +31,7 @@ function freePort() {
   });
 }
 
-const dataDir = await mkdtemp(path.join(os.tmpdir(), "taskmint-pg-"));
+const dataDir = await mkdtemp(path.join(os.tmpdir(), "codesapiens-pg-"));
 const port = await freePort();
 const server = new EmbeddedPostgres({
   databaseDir: dataDir,
@@ -89,7 +89,7 @@ try {
   for (const [id, name] of [[admin1, "conc_admin1"], [admin2, "conc_admin2"], [user, "conc_user"]]) {
     await admin.query("insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, $3)", [
       id,
-      `${name}@taskmint.test`,
+      `${name}@codesapiens.test`,
       { username: name },
     ]);
   }
@@ -215,7 +215,7 @@ try {
     const target = crypto.randomUUID();
     await admin.query("insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, $3)", [
       target,
-      `race4@taskmint.test`,
+      `race4@codesapiens.test`,
       { username: "race4_user" },
     ]);
     const [c0, c1, c2] = [await connect(), await connect(), await connect()];
@@ -237,7 +237,7 @@ try {
     const target = crypto.randomUUID();
     await admin.query("insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, $3)", [
       target,
-      `race5@taskmint.test`,
+      `race5@codesapiens.test`,
       { username: "race5_user" },
     ]);
     const [c1, c2] = [await connect(), await connect()];
@@ -262,7 +262,7 @@ try {
     const target = crypto.randomUUID();
     await admin.query("insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, $3)", [
       target,
-      `race6@taskmint.test`,
+      `race6@codesapiens.test`,
       { username: "race6_user" },
     ]);
     const subs = [];

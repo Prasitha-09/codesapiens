@@ -1,6 +1,6 @@
-# TaskMint database security
+# Code Sapiens — database security
 
-How the database enforces TaskMint's rules, how to apply the migrations, and how to test permissions.
+How the database enforces The Challenge Arena's rules, how to apply the migrations, and how to test permissions.
 
 ## Principles
 

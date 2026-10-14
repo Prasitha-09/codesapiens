@@ -4,12 +4,12 @@ import { describe, expect, it } from "vitest";
 import { isValidPublicSlug, publicProfileUrl } from "@/lib/profile/public-url";
 import { QR_PNG_WIDTH, qrPng, qrSvg, qrSvgDataUri } from "@/lib/profile/qr";
 
-const SITE = "https://taskmint.example";
+const SITE = "https://codesapiens.example";
 const SLUG = "0123456789ab";
 
 describe("public profile URL", () => {
   it("builds an absolute /u/<slug> URL from the site URL", () => {
-    expect(publicProfileUrl(SLUG, SITE)).toBe("https://taskmint.example/u/0123456789ab");
+    expect(publicProfileUrl(SLUG, SITE)).toBe("https://codesapiens.example/u/0123456789ab");
     expect(publicProfileUrl(SLUG, "http://localhost:3000")).toBe("http://localhost:3000/u/0123456789ab");
   });
 

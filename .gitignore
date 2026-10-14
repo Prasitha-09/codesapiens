@@ -43,3 +43,19 @@ next-env.d.ts
 
 # visual check output
 /.screenshots/
+
+# logs
+*.log
+
+# editor / OS files
+.vscode/
+.idea/
+Thumbs.db
+
+# Supabase CLI local state (if the CLI is linked later)
+supabase/.temp/
+supabase/.branches/
+
+# test / browser tool output
+/test-results/
+/playwright-report/

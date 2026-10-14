@@ -19,7 +19,7 @@ function form(fields: Record<string, string>) {
 
 const validTask = {
   title: "Write a review",
-  description: "Write a short review of TaskMint.",
+  description: "Write a short review of The Challenge Arena.",
   requirements: "",
   reward_coins: "25",
   deadline: "2026-10-20T18:30",
@@ -44,7 +44,7 @@ describe("parseTaskForm", () => {
       success: true,
       data: {
         title: "Write a review",
-        description: "Write a short review of TaskMint.",
+        description: "Write a short review of The Challenge Arena.",
         requirements: null,
         reward_coins: 25,
         deadline: "2026-10-20T18:30:00.000Z",

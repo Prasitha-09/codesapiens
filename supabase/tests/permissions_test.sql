@@ -1,4 +1,4 @@
--- TaskMint · Permission & RLS test suite
+-- Code Sapiens · Permission & RLS test suite
 --
 -- HOW TO RUN: paste this whole file into the Supabase SQL Editor (DEVELOPMENT
 -- project) and click Run. It returns one row per test plus a SUMMARY row.
@@ -13,7 +13,7 @@
 -- Expected denials must fail with the SPECIFIC expected SQLSTATE, so a typo or an
 -- unrelated error can never be counted as a pass.
 
-create or replace function pg_temp.taskmint_permission_tests()
+create or replace function pg_temp.codesapiens_permission_tests()
 returns table (test_no bigint, test text, passed boolean, detail text)
 language plpgsql
 as $fn$
@@ -73,14 +73,14 @@ begin
     insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, raw_app_meta_data, created_at, updated_at)
     values
       (u_a, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-       'rls-a-' || sfx || '@taskmint.test',
+       'rls-a-' || sfx || '@codesapiens.test',
        -- A malicious signup trying to self-assign admin through metadata:
        jsonb_build_object('username', 'rt_a_' || sfx, 'role', 'admin'), '{}'::jsonb, now(), now()),
       (u_b, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-       'rls-b-' || sfx || '@taskmint.test',
+       'rls-b-' || sfx || '@codesapiens.test',
        jsonb_build_object('username', 'rt_b_' || sfx), '{}'::jsonb, now(), now()),
       (u_admin, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-       'rls-admin-' || sfx || '@taskmint.test',
+       'rls-admin-' || sfx || '@codesapiens.test',
        jsonb_build_object('username', 'rt_adm_' || sfx), '{}'::jsonb, now(), now());
 
     select role::text into txt from public.profiles where id = u_a;
@@ -516,7 +516,7 @@ begin
     begin
       select to_jsonb(u) into j from public.admin_list_users('rt_a_' || sfx, 10, 0) u;
       res := res || jsonb_build_object('t', 'Admin can search users and see their email',
-                                       'ok', j ->> 'email' = 'rls-a-' || sfx || '@taskmint.test' and (j ->> 'total_count')::int = 1,
+                                       'ok', j ->> 'email' = 'rls-a-' || sfx || '@codesapiens.test' and (j ->> 'total_count')::int = 1,
                                        'd', coalesce(j::text, '<no row>'));
     exception when others then
       res := res || jsonb_build_object('t', 'Admin can search users and see their email', 'ok', false, 'd', sqlstate || ' ' || sqlerrm);
@@ -846,7 +846,7 @@ begin
                                                  = (select array_agg(k order by k) from unnest(allowed_profile_keys) k)
                                              and (j ->> 'lifetime_coins')::bigint = 60
                                              and j -> 'social_links' ->> 'github' = 'https://github.com/octocat'
-                                             and j::text not like '%@taskmint.test%',
+                                             and j::text not like '%@codesapiens.test%',
                                        'd', coalesce(j::text, '<no row>'));
     exception when others then
       res := res || jsonb_build_object('t', 'Public profile returns only allow-listed fields', 'ok', false, 'd', sqlstate || ' ' || sqlerrm);
@@ -951,13 +951,13 @@ begin
     perform set_config('request.jwt.claims', '', true);
     insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, raw_app_meta_data, created_at, updated_at)
     values
-      (c_admin, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-admin-' || sfx || '@taskmint.test',
+      (c_admin, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-admin-' || sfx || '@codesapiens.test',
        jsonb_build_object('username', 'ct_adm_' || sfx), '{}'::jsonb, now(), now()),
-      (c_x, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-x-' || sfx || '@taskmint.test',
+      (c_x, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-x-' || sfx || '@codesapiens.test',
        jsonb_build_object('username', 'ct_x_' || sfx), '{}'::jsonb, now(), now()),
-      (c_y, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-y-' || sfx || '@taskmint.test',
+      (c_y, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-y-' || sfx || '@codesapiens.test',
        jsonb_build_object('username', 'ct_y_' || sfx), '{}'::jsonb, now(), now()),
-      (c_z, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-z-' || sfx || '@taskmint.test',
+      (c_z, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'coin-z-' || sfx || '@codesapiens.test',
        jsonb_build_object('username', 'ct_z_' || sfx), '{}'::jsonb, now(), now());
     update public.profiles set role = 'admin' where id = c_admin;
     insert into public.tasks (title, description, reward_coins, status) values ('Coin task 40', 'x', 40, 'active') returning id into t_c1;
@@ -1163,9 +1163,9 @@ begin
     perform set_config('request.jwt.claims', '', true);
 
     -- Always roll back everything above.
-    raise exception 'TASKMINT_TEST_ROLLBACK';
+    raise exception 'CODESAPIENS_TEST_ROLLBACK';
   exception when others then
-    if sqlerrm <> 'TASKMINT_TEST_ROLLBACK' then
+    if sqlerrm <> 'CODESAPIENS_TEST_ROLLBACK' then
       res := res || jsonb_build_object('t', 'Test run aborted unexpectedly', 'ok', false, 'd', sqlstate || ' ' || sqlerrm);
     end if;
   end;
@@ -1186,4 +1186,4 @@ begin
 end;
 $fn$;
 
-select * from pg_temp.taskmint_permission_tests();
+select * from pg_temp.codesapiens_permission_tests();

@@ -1,4 +1,4 @@
--- Minimal stand-in for the parts of a Supabase database that TaskMint's
+-- Minimal stand-in for the parts of a Supabase database that The Challenge Arena's
 -- migrations rely on, so they can be tested locally in PGlite (in-memory Postgres).
 -- This is NOT a full Supabase emulation — always also run
 -- supabase/tests/permissions_test.sql against a real development project.

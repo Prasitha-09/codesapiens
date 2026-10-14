@@ -37,7 +37,7 @@ describe("dev task seed", () => {
     const userId = crypto.randomUUID();
     await db.query(
       "insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, '{}'::jsonb)",
-      [userId, `seed-${userId}@taskmint.test`],
+      [userId, `seed-${userId}@codesapiens.test`],
     );
     await db.exec("set role authenticated");
     await db.query("select set_config('request.jwt.claims', $1, false)", [JSON.stringify({ sub: userId, role: "authenticated" })]);
@@ -49,7 +49,7 @@ describe("dev task seed", () => {
       ).rejects.toMatchObject({ code: "42501" });
 
       const ok = await db.query<{ id: string }>(
-        "insert into public.task_submissions (task_id, proof_text) select id, 'done' from public.tasks where title = 'Share TaskMint with a friend' returning id",
+        "insert into public.task_submissions (task_id, proof_text) select id, 'done' from public.tasks where title = 'Share The Challenge Arena with a friend' returning id",
       );
       expect(ok.rows).toHaveLength(1);
     } finally {
