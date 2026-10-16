@@ -11,6 +11,7 @@ function matches(pathname: string, prefix: string) {
 }
 
 export function isProtectedPath(pathname: string) {
+  if (pathname === "/admin/login") return false;
   return protectedPrefixes.some((p) => matches(pathname, p));
 }
 

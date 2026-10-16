@@ -75,7 +75,7 @@ export type ReviewItem = Omit<TaskSubmission, "evidence_path"> & {
 
 /** Submissions by status: pending oldest-first (a fair queue), others newest-first. */
 export async function listSubmissionsForReview(status: SubmissionStatus, limit = 50): Promise<Result<ReviewItem[]>> {
-  await requireAdmin("/admin/submissions");
+  await requireAdmin("/admin/review");
   const supabase = await createClient();
   const { data: rows, error } = await supabase
     .from("task_submissions")

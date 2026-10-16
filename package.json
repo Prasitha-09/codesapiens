@@ -11,10 +11,12 @@
     "check": "npm run lint && npm run typecheck",
     "test:db": "node tests/db/run-db-tests.mjs",
     "test:api": "node tests/api/anon-permissions.mjs",
-    "test:unit": "vitest run",
-    "test": "npm run test:unit && npm run test:db",
+    "test:unit": "node scripts/test-unit.mjs",
+    "test": "npm run test:unit && npm run test:db && npm run test:quiz",
     "test:concurrency": "node tests/db/run-concurrency-tests.mjs",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "test:quiz": "node tests/db/live-quiz.mjs",
+    "test:quiz:concurrency": "node tests/db/quiz-concurrency.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

@@ -12,6 +12,7 @@ import { getSupabaseEnv } from "./env";
  * This is NOT the security boundary — pages, Server Actions and RLS all re-check.
  */
 export async function updateSession(request: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) return NextResponse.next({ request });
   const { url, publishableKey } = getSupabaseEnv();
   let response = NextResponse.next({ request });
 
@@ -40,7 +41,7 @@ export async function updateSession(request: NextRequest) {
 
   if (!signedIn && isProtectedPath(pathname)) {
     const loginUrl = request.nextUrl.clone();
-    loginUrl.pathname = "/login";
+    loginUrl.pathname = pathname.startsWith("/admin") ? "/admin/login" : "/login";
     loginUrl.search = "";
     loginUrl.searchParams.set("next", `${pathname}${search}`);
     return redirectWithSession(loginUrl, response);

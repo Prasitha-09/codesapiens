@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { LegacyAdminHeader } from "@/components/admin/legacy-header";
 import { AdminNav } from "@/components/admin/admin-nav";
 import { PageLoading, RequireAdmin } from "@/components/auth/gates";
 import { Container } from "@/components/layout/container";
@@ -18,12 +19,12 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
   return (
     <Suspense fallback={<PageLoading />}>
       <RequireAdmin next="/admin">
-        <header className="border-b-[3px] border-ink bg-surface text-ink">
+        <LegacyAdminHeader><header className="border-b-[3px] border-ink bg-surface text-ink">
           <Container className="flex flex-col gap-4 py-8">
             <p className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-mint">Admin</p>
             <AdminNav />
           </Container>
-        </header>
+        </header></LegacyAdminHeader>
         {children}
       </RequireAdmin>
     </Suspense>

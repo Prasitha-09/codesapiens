@@ -1,0 +1,9 @@
+export type Team = { id: string; name: string; color: string; capacity: number; members: number; score: number; rank: number };
+export type QuizEvent = { id: string; name: string; status: "lobby" | "live" | "paused" | "ended"; submissions_open: boolean; submission_mode: "captain" | "any" };
+export type Question = { id: string; prompt: string; kind: "mcq" | "short"; options: string[]; round: string; points: number; number: number };
+export type QuizState = { event: QuizEvent | null; teams: Team[]; question?: Question | null; participant?: { id: string; name: string; team_id: string; captain: boolean; submission: { answer: string; verdict: string } | null } | null; total_questions?: number };
+export type Round = { id: string; name: string; points: number; position: number };
+export type AdminQuestion = { id: string; prompt: string; kind: "mcq" | "short"; options: string[]; round_id: string; answer_key: string; position: number; published: boolean };
+export type Participant = { id: string; name: string; team_id: string; captain: boolean };
+export type Submission = { id: string; team_id: string; question_id: string; answer: string; verdict: string; created_at: string };
+export type AdminState = QuizState & { events: (QuizEvent & { join_code: string })[]; settings: QuizEvent & { join_code: string }; rounds: Round[]; questions: AdminQuestion[]; participants: Participant[]; submissions: Submission[]; scores: { id: string; team_id: string; points: number; reason: string; created_at: string }[]; audit: { id: string; action: string; created_at: string; detail: unknown }[] };

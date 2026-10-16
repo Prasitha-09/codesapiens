@@ -1,3 +1,13 @@
+# SAPIENS CAMPUS — Live Quiz Arena
+
+A persistent, team-based college quiz with Supabase authentication, private question keys, transactional scoring, a public live leaderboard, and an organizer control room. The existing challenge-and-coins application remains available.
+
+**Start here: [Quiz setup, event workflow, security, and tests](docs/live-quiz.md).** Configure `.env.local`, apply the migrations, enable anonymous sign-ins, and provision the first admin. Then run `npm run dev`.
+
+Quiz routes: `/`, `/join`, `/quiz`, `/leaderboard`, `/admin/login`, and the `/admin` organizer pages. Original entry points: `/challenges`, `/challenge-leaderboard`, `/admin/challenges`, `/admin/review`.
+
+---
+
 # Code Sapiens — The Challenge Arena
 
 The event platform for **Code Sapiens**: participants take on challenges, submit their work, earn coins when an organizer approves it, and compete on a live leaderboard.

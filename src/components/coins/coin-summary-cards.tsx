@@ -27,7 +27,7 @@ export function CoinSummaryCards({ summary }: { summary: CoinSummary }) {
           <p className="text-3xl font-bold">{summary.leaderboard_rank ? `#${summary.leaderboard_rank}` : "—"}</p>
           <p className="text-xs">
             {summary.leaderboard_rank ? (
-              <Link href="/leaderboard" className="underline">
+              <Link href="/challenge-leaderboard" className="underline">
                 View leaderboard
               </Link>
             ) : !summary.is_public ? (

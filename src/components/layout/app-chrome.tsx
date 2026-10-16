@@ -1,0 +1,8 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
+export function AppChrome({children,header,footer}:{children:ReactNode;header:ReactNode;footer:ReactNode}) {
+ const path=usePathname();const quiz=["/","/join","/quiz","/leaderboard","/admin/login","/admin","/admin/teams","/admin/rounds","/admin/questions","/admin/submissions","/admin/scores","/admin/settings"].includes(path);
+ return <>{quiz?<header style={{background:"#ffd95a",color:"#111",borderBottom:"3px solid #111",padding:"18px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:20,flexWrap:"wrap"}}><Link href="/" style={{fontSize:20,fontWeight:900,letterSpacing:-1}}>✳ SAPIENS CAMPUS<span style={{display:"block",fontSize:9,letterSpacing:3,marginLeft:25}}>LIVE QUIZ ARENA</span></Link><nav aria-label="Main" style={{display:"flex",gap:24,fontSize:13,fontWeight:800,alignItems:"center",flexWrap:"wrap"}}><Link href="/" aria-current={path==="/"?"page":undefined}>The lobby</Link><Link href="/quiz">Play</Link><Link href="/leaderboard">Leaderboard</Link><Link href="/join" style={{background:"#111",color:"white",padding:"10px 18px",borderRadius:6}}>Join the arena ↗</Link></nav></header>:header}<main id="main" className="flex flex-1 flex-col">{children}</main>{quiz?<footer style={{background:"#fff0c8",color:"#111",borderTop:"2px solid #111",padding:"24px",display:"flex",justifyContent:"space-between",gap:16,flexWrap:"wrap",fontSize:12}}><strong>✳ SAPIENS CAMPUS · Made for curious minds.</strong><div style={{display:"flex",gap:20}}><Link href="/challenges">Challenge arena</Link><Link href="/admin/login">Organizer login ↗</Link></div></footer>:footer}</>;
+}

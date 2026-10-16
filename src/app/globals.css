@@ -113,3 +113,6 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Local font stacks keep event deployments independent of Google Fonts access. */
+:root { --font-space-grotesk: Arial, Helvetica, sans-serif; --font-space-mono: "Courier New", monospace; --font-anton: Impact, "Arial Narrow", sans-serif; }

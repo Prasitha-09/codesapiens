@@ -15,9 +15,9 @@ const notices: Record<string, { tone: "success" | "danger" | "info"; text: strin
   confirm: { tone: "danger", text: "That confirmation link is invalid or has expired. Try logging in, or sign up again." },
 };
 
-export function LoginForm() {
+export function LoginForm({ admin = false }: { admin?: boolean }) {
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "";
+  const next = admin ? "/admin" : searchParams.get("next") ?? "";
   const notice = searchParams.get("error")
     ? notices[searchParams.get("error") as string]
     : searchParams.has("signed_out")
@@ -66,16 +66,16 @@ export function LoginForm() {
         />
       </Field>
 
-      <Button type="submit" size="lg" block disabled={pending}>
+      <Button type="submit" size="lg" block className={admin ? "quiz-button" : undefined} disabled={pending || (admin && (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY))}>
         {pending ? "Logging in…" : "Log in"}
       </Button>
 
-      <p className="text-center text-sm">
+      {!admin && <p className="text-center text-sm">
         New to the arena?{" "}
         <Link href="/signup" className="font-bold underline underline-offset-4">
           Create an account
         </Link>
-      </p>
+      </p>}
     </form>
   );
 }

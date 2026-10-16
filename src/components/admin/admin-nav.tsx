@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const items = [
-  { href: "/admin", label: "Overview", exact: true },
-  { href: "/admin/submissions", label: "Review" },
+  { href: "/admin", label: "Quiz", exact: true },
+  { href: "/admin/challenges", label: "Challenges" },
+  { href: "/admin/review", label: "Review" },
   { href: "/admin/tasks", label: "Tasks" },
   { href: "/admin/users", label: "Users" },
   { href: "/admin/audit", label: "Audit log" },

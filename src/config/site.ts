@@ -16,7 +16,7 @@ export type NavItem = { href: string; label: string };
 /** Links shown to everyone. Challenges needs a sign-in; the page redirects to log in. */
 export const primaryNav: NavItem[] = [
   { href: "/tasks", label: "Challenges" },
-  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/challenge-leaderboard", label: "Leaderboard" },
 ];
 
 /** Links for signed-in participants. */

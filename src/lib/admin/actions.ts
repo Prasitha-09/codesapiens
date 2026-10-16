@@ -144,10 +144,10 @@ export async function reviewSubmission(_prev: ActionState, formData: FormData): 
   // queue, so report the outcome on the refreshed queue page instead.
   revalidatePath("/admin", "layout");
   revalidatePath("/submissions");
-  revalidatePath("/leaderboard");
+  revalidatePath("/challenge-leaderboard");
   revalidatePath("/wallet");
   revalidatePath("/dashboard");
-  redirect(`/admin/submissions?reviewed=${error ? "already" : decision}`);
+  redirect(`/admin/review?reviewed=${error ? "already" : decision}`);
 }
 
 // ---------------------------------------------------------------- users
